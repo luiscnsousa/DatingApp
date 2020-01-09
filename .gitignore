@@ -196,7 +196,6 @@ _pkginfo.txt
 ClientBin/
 ~$*
 *~
-*.db
 *.dbmdl
 *.dbproj.schemaview
 *.jfm
@@ -223,6 +222,11 @@ UpgradeLog*.htm
 # SQL Server files
 *.mdf
 *.ldf
+
+# SQLite files
+*.db
+*.db-wal
+*.db-shm
 
 # Business Intelligence projects
 *.rdl.data
