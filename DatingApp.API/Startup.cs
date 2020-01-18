@@ -18,9 +18,11 @@ namespace DatingApp.API
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.IdentityModel.Tokens;
     using System.Text;
+    using AutoMapper;
     using DatingApp.API.Helpers;
     using Microsoft.AspNetCore.Diagnostics;
     using Microsoft.AspNetCore.Http;
+    using Newtonsoft.Json;
 
     public class Startup
     {
@@ -36,9 +38,14 @@ namespace DatingApp.API
         {
             services.AddDbContext<DataContext>(builder =>
                 builder.UseSqlite(this.Configuration.GetConnectionString("DefaultConnection")));
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(opt =>
+                {
+                    opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
             services.AddCors();
+            services.AddAutoMapper(typeof(DatingRepository).Assembly);
             services.AddScoped<IAuthRepository, AuthRepository>();
+            services.AddScoped<IDatingRepository, DatingRepository>();
             services
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => 
