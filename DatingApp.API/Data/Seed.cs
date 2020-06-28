@@ -16,9 +16,9 @@ namespace DatingApp.API.Data
                 var users = JsonConvert.DeserializeObject<List<User>>(userData);
                 foreach (var user in users)
                 {
-                    var (passwordHash, passwordSalt) = CreatePasswordHash("password");
-                    user.PasswordHash = passwordHash;
+                    var (passwordSalt, passwordHash) = CreatePasswordHash("password");
                     user.PasswordSalt = passwordSalt;
+                    user.PasswordHash = passwordHash;
                     user.Username = user.Username.ToLower();
                     context.Users.Add(user);
                 }
