@@ -2,8 +2,8 @@ namespace DatingApp.API.Data
 {
     using System.Collections.Generic;
     using System.Security.Cryptography;
+    using System.Linq;
     using DatingApp.API.Models;
-    using Microsoft.EntityFrameworkCore.Internal;
     using Newtonsoft.Json;
 
     public class Seed

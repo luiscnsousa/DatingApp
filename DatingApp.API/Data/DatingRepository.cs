@@ -42,5 +42,10 @@ namespace DatingApp.API.Data
                 .Include(u => u.Photos)
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
+
+        public Task<Photo> GetPhotoAsync(int id)
+        {
+            return this.context.Photos.FirstOrDefaultAsync(p => p.Id == id);
+        }
     }
 }
