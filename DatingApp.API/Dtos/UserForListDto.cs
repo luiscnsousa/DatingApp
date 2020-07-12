@@ -2,7 +2,7 @@ namespace DatingApp.API.Dtos
 {
     using System;
 
-    public class ListUserDto
+    public class UserForListDto
     {
         public int Id { get; set; }
 

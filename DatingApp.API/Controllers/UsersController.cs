@@ -31,7 +31,7 @@ namespace DatingApp.API.Controllers
         {
             var users = await this.repo.GetUsersAsync();
 
-            var listUsers = this.mapper.Map<IEnumerable<ListUserDto>>(users);
+            var listUsers = this.mapper.Map<IEnumerable<UserForListDto>>(users);
 
             return this.Ok(listUsers);
         }

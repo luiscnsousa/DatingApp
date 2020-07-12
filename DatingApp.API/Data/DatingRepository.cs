@@ -47,5 +47,10 @@ namespace DatingApp.API.Data
         {
             return this.context.Photos.FirstOrDefaultAsync(p => p.Id == id);
         }
+
+        public Task<Photo> GetMainPhotoForUserAsync(int userId)
+        {
+            return this.context.Photos.FirstOrDefaultAsync(p => p.UserId == userId && p.IsMain);
+        }
     }
 }
