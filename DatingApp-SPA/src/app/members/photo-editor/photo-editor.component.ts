@@ -13,7 +13,6 @@ import { AlertifyService } from 'src/app/_services/alertify.service';
 })
 export class PhotoEditorComponent implements OnInit {
   @Input() photos: Photo[];
-  @Output() getMemberPhotoChange = new EventEmitter<string>();
   baseUrl = environment.apiUrl;
   uploader: FileUploader;
   hasBaseDropZoneOver = false;
