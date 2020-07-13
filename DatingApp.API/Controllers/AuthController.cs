@@ -29,29 +29,27 @@ namespace DatingApp.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterUserDto registerUser)//string username, string password)
+        public async Task<IActionResult> Register(UserForRegisterDto userForRegister)//string username, string password)
         {
-            registerUser.Username = registerUser.Username.ToLower();
-            if (await this.authRepository.UserExistsAsync(registerUser.Username))
+            userForRegister.Username = userForRegister.Username.ToLower();
+            if (await this.authRepository.UserExistsAsync(userForRegister.Username))
             {
                 return this.BadRequest("Username already taken");
             }
 
-            var userToCreate = new User
-            {
-                Username = registerUser.Username
-            };
+            var userToCreate = this.mapper.Map<User>(userForRegister);
 
-            var createdUser = await this.authRepository.RegisterAsync(userToCreate, registerUser.Password);
+            var createdUser = await this.authRepository.RegisterAsync(userToCreate, userForRegister.Password);
 
-            // TODO: created at route
-            return this.StatusCode(201);
+            var userToReturn = this.mapper.Map<UserForDetailedDto>(createdUser);
+
+            return this.CreatedAtRoute("GetUser", new { controller = "Users", id = createdUser.Id }, userToReturn);
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginUserDto loginUser)
+        public async Task<IActionResult> Login(UserForLoginDto userForLogin)
         {
-            var userFromRepo = await this.authRepository.LoginAsync(loginUser.Username.ToLower(), loginUser.Password);
+            var userFromRepo = await this.authRepository.LoginAsync(userForLogin.Username.ToLower(), userForLogin.Password);
             if (userFromRepo == null)
             {
                 return this.Unauthorized();
