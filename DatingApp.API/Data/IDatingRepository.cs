@@ -1,5 +1,6 @@
 namespace DatingApp.API.Data
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using DatingApp.API.Helpers;
     using DatingApp.API.Models;
@@ -21,5 +22,11 @@ namespace DatingApp.API.Data
         Task<Photo> GetMainPhotoForUserAsync(int userId);
 
         Task<Like> GetLikeAsync(int userId, int recipientId);
+
+        Task<Message> GetMessageAsync(int id);
+
+        Task<PagedList<Message>> GetMessagesForUserAsync(MessageParams messageParams);
+
+        Task<List<Message>> GetMessageThreadAsync(int userId, int recipientId);
     }
 }
