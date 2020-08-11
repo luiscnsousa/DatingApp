@@ -31,7 +31,6 @@ export class MemberMessagesComponent implements OnInit {
     this.userService.getMessageThread(this.authService.decodedToken.nameid, this.recipientId)
       .pipe(
         tap(messages => {
-          debugger;
           for (let i = 0; i < messages.length; i++) {
             if (!messages[i].isRead && messages[i].recipientId === currentUserId) {
               this.userService.markAsRead(messages[i].id, currentUserId);
