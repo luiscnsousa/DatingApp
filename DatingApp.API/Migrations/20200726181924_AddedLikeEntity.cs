@@ -1,7 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace DatingApp.API.Migrations
+﻿namespace DatingApp.API.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
+    
     public partial class AddedLikeEntity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
