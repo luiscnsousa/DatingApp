@@ -21,7 +21,7 @@
         <img src="{{photoUrl || '../../assets/user.png'}}" alt="" />
       </span>
       <a class="dropdown-toggle text-light" dropdownToggle>
-        Welcome {{authService.decodedToken.unique_name | titlecase}}
+        Welcome {{uniqueName | titlecase}}
       </a>
 
       <div class="dropdown-menu mt-3" *dropdownMenu>
