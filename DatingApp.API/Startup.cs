@@ -36,7 +36,10 @@ namespace DatingApp.API
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(builder =>
-                builder.UseSqlite(this.Configuration.GetConnectionString("DefaultConnection")));
+            {
+                builder.UseLazyLoadingProxies();
+                builder.UseSqlite(this.Configuration.GetConnectionString("DefaultConnection"));
+            });
             
             this.ConfigureServices(services);
         }
@@ -46,7 +49,10 @@ namespace DatingApp.API
             // MySql
             // "DefaultConnection": "Server=localhost; Database=datingapp; Uid=appuser; Pwd=password"
             services.AddDbContext<DataContext>(builder =>
-                builder.UseMySql(this.Configuration.GetConnectionString("DefaultConnection")));
+            {
+                builder.UseLazyLoadingProxies();
+                builder.UseMySql(this.Configuration.GetConnectionString("DefaultConnection"));
+            });
             
             // Sql Server
             // "DefaultConnection": "Server=windows-10; Database=datingapp; User Id=appuser; Password=password"

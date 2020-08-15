@@ -35,7 +35,6 @@ namespace DatingApp.API.Data
         public async Task<PagedList<User>> GetUsersAsync(UserParams userParams)
         {
             var users = this.context.Users
-                .Include(u => u.Photos)
                 .OrderByDescending(u => u.LastActive)
                 .Where(u => u.Id != userParams.UserId)
                 .Where(u => u.Gender == userParams.Gender)
@@ -79,9 +78,7 @@ namespace DatingApp.API.Data
 
         public Task<User> GetUserAsync(int id)
         {
-            return this.context.Users
-                .Include(u => u.Photos)
-                .FirstOrDefaultAsync(u => u.Id == id);
+            return this.context.Users.FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public Task<Photo> GetPhotoAsync(int id)
@@ -106,12 +103,7 @@ namespace DatingApp.API.Data
 
         public Task<PagedList<Message>> GetMessagesForUserAsync(MessageParams messageParams)
         {
-            var messages = this.context.Messages
-                .Include(m => m.Sender)
-                .ThenInclude(u => u.Photos)
-                .Include(m => m.Recipient)
-                .ThenInclude(u => u.Photos)
-                .AsQueryable();
+            var messages = this.context.Messages.AsQueryable();
 
             switch (messageParams.MessageContainer)
             {
@@ -140,10 +132,6 @@ namespace DatingApp.API.Data
         public Task<List<Message>> GetMessageThreadAsync(int userId, int recipientId)
         {
             return this.context.Messages
-                .Include(m => m.Sender)
-                .ThenInclude(u => u.Photos)
-                .Include(m => m.Recipient)
-                .ThenInclude(u => u.Photos)
                 .Where(m =>
                     (m.SenderId == userId && m.RecipientId == recipientId && !m.SenderDeleted) ||
                     (m.RecipientId == userId && m.SenderId == recipientId && !m.RecipientDeleted))
@@ -153,10 +141,7 @@ namespace DatingApp.API.Data
 
         private async Task<IEnumerable<int>> GetUserLikesAsync(int id, bool likers)
         {
-            var user = await this.context.Users
-                .Include(u => u.Likers)
-                .Include(u => u.Likees)
-                .FirstOrDefaultAsync(u => u.Id == id);
+            var user = await this.context.Users.FirstOrDefaultAsync(u => u.Id == id);
 
             return likers
                 ? user.Likers.Where(u => u.LikeeId == id).Select(l => l.LikerId)

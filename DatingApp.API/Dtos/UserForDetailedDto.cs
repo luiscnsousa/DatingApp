@@ -2,7 +2,6 @@ namespace DatingApp.API.Dtos
 {
     using System;
     using System.Collections.Generic;
-    using DatingApp.API.Models;
 
     public class UserForDetailedDto
     {
@@ -32,6 +31,6 @@ namespace DatingApp.API.Dtos
 
         public string PhotoUrl { get; set; }
 
-        public ICollection<PhotoForDetailedDto> Photos { get; set; }
+        public virtual ICollection<PhotoForDetailedDto> Photos { get; set; }
     }
 }
