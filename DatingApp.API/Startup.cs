@@ -57,7 +57,10 @@ namespace DatingApp.API
             // Sql Server
             // "DefaultConnection": "Server=windows-10; Database=datingapp; User Id=appuser; Password=password"
             // services.AddDbContext<DataContext>(builder =>
-            //     builder.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection")));
+            // {
+            //     builder.UseLazyLoadingProxies();
+            //     builder.UseSqlServer(this.Configuration.GetConnectionString("DefaultConnection"));
+            // });
             
             this.ConfigureServices(services);
         }
