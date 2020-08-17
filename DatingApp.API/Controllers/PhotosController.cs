@@ -11,11 +11,9 @@ namespace DatingApp.API.Controllers
     using DatingApp.API.Dtos;
     using DatingApp.API.Helpers;
     using DatingApp.API.Models;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
 
-    [Authorize]
     [ApiController]
     [Route("api/users/{userId}/photos")]
     public class PhotosController : ControllerBase

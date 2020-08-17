@@ -9,10 +9,8 @@ namespace DatingApp.API.Controllers
     using DatingApp.API.Dtos;
     using DatingApp.API.Helpers;
     using DatingApp.API.Models;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     [ServiceFilter(typeof(LogUserActivity))]

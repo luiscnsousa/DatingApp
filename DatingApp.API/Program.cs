@@ -1,17 +1,19 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
-
 namespace DatingApp.API
 {
     using System;
+    using System.Threading.Tasks;
     using DatingApp.API.Data;
+    using DatingApp.API.Models;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
     using Microsoft.Extensions.Logging;
 
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
 
@@ -21,8 +23,10 @@ namespace DatingApp.API
                 try
                 {
                     var context = services.GetRequiredService<DataContext>();
-                    context.Database.Migrate();
-                    Seed.SeedUsers(context);
+                    await context.Database.MigrateAsync();
+                    
+                    var userManager = services.GetRequiredService<UserManager<User>>();
+                    await Seed.SeedUsersAsync(userManager);
                 }
                 catch (Exception ex)
                 {
@@ -31,10 +35,10 @@ namespace DatingApp.API
                 }
             }
             
-            host.Run();
+            await host.RunAsync();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
+        private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
