@@ -16,17 +16,11 @@ export class AuthService {
   currentUser: User;
   photoUrl = new BehaviorSubject<string>('../../assets/user.png');
   currentPhotoUrl = this.photoUrl.asObservable();
-  uniqueName = new BehaviorSubject<string>('');
-  currentUniqueName = this.uniqueName.asObservable();
 
   constructor(private http: HttpClient) { }
 
   changeMemberPhoto(photoUrl: string) {
     this.photoUrl.next(photoUrl);
-  }
-
-  changeUniqueName(uniqueName: string) {
-    this.uniqueName.next(uniqueName);
   }
 
   login(model: any) {
@@ -40,7 +34,6 @@ export class AuthService {
             this.decodedToken = this.jwtHelper.decodeToken(res.token);
             this.currentUser = res.user;
             this.changeMemberPhoto(this.currentUser.photoUrl);
-            this.changeUniqueName(this.decodedToken.unique_name);
           }
         })
       );
