@@ -58,7 +58,7 @@ namespace DatingApp.API.Controllers
                 return this.Unauthorized();
             }
             
-            var userFromRepo = await this.repo.GetUserAsync(userId);
+            var userFromRepo = await this.repo.GetUserAsync(userId, true);
 
             var file = photoForCreationDto.File;
             
@@ -105,7 +105,7 @@ namespace DatingApp.API.Controllers
                 return this.Unauthorized();
             }
             
-            var user = await this.repo.GetUserAsync(userId);
+            var user = await this.repo.GetUserAsync(userId, true);
 
             if (!user.Photos.Any(p => p.Id == id))
             {
@@ -140,7 +140,7 @@ namespace DatingApp.API.Controllers
                 return this.Unauthorized();
             }
             
-            var user = await this.repo.GetUserAsync(userId);
+            var user = await this.repo.GetUserAsync(userId, true);
 
             if (!user.Photos.Any(p => p.Id == id))
             {
