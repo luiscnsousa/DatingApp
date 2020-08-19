@@ -15,7 +15,7 @@ namespace DatingApp.API.Data
         
         Task<PagedList<User>> GetUsersAsync(UserParams userParams);
         
-        Task<User> GetUserAsync(int id);
+        Task<User> GetUserAsync(int id, bool isCurrentUser);
         
         Task<Photo> GetPhotoAsync(int id);
         

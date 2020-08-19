@@ -32,6 +32,12 @@ namespace DatingApp.API.Data
                 
                 foreach (var user in users)
                 {
+                    var photo = user.Photos.SingleOrDefault();
+                    if (photo != null)
+                    {
+                        photo.IsApproved = true;
+                    }
+                    
                     await userManager.CreateAsync(user, "password");
                     await userManager.AddToRoleAsync(user, "Member");
                 }

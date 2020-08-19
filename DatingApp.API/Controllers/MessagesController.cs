@@ -85,7 +85,7 @@ namespace DatingApp.API.Controllers
         public async Task<IActionResult> CreateMessage(int userId, MessageForCreationDto messageForCreationDto)
         {
             // getting the sender will help AutoMapper getting this information for messageToReturn variable
-            var sender = await this.repo.GetUserAsync(userId);
+            var sender = await this.repo.GetUserAsync(userId, true);
             
             if (sender.Id != int.Parse(this.User.FindFirst(ClaimTypes.NameIdentifier).Value))
             {
@@ -94,7 +94,7 @@ namespace DatingApp.API.Controllers
 
             messageForCreationDto.SenderId = userId;
 
-            var recipient = await this.repo.GetUserAsync(messageForCreationDto.RecipientId);
+            var recipient = await this.repo.GetUserAsync(messageForCreationDto.RecipientId, false);
             if (recipient == null)
             {
                 return this.BadRequest("Could not find user");

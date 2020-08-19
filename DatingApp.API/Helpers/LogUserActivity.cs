@@ -17,7 +17,7 @@ namespace DatingApp.API.Helpers
 
             var repo = resultsContext.HttpContext.RequestServices.GetService<IDatingRepository>();
 
-            var user = await repo.GetUserAsync(userId);
+            var user = await repo.GetUserAsync(userId, true);
             
             user.LastActive = DateTime.Now;
 

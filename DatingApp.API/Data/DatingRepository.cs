@@ -76,14 +76,25 @@ namespace DatingApp.API.Data
             return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize);
         }
 
-        public Task<User> GetUserAsync(int id)
+        public Task<User> GetUserAsync(int id, bool isCurrentUser)
         {
-            return this.context.Users.FirstOrDefaultAsync(u => u.Id == id);
+            var query = this.context.Users
+                .Include(u => u.Photos)
+                .AsQueryable();
+
+            if (isCurrentUser)
+            {
+                query = query.IgnoreQueryFilters();
+            }
+            
+            return query.FirstOrDefaultAsync(u => u.Id == id);
         }
 
         public Task<Photo> GetPhotoAsync(int id)
         {
-            return this.context.Photos.FirstOrDefaultAsync(p => p.Id == id);
+            return this.context.Photos
+                .IgnoreQueryFilters()
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
 
         public Task<Photo> GetMainPhotoForUserAsync(int userId)
